@@ -27,7 +27,7 @@
   most in the queue), make that limit be respected. Review the API of the collection used as a queue to see how to ensure that this limit is not exceeded. Verify that, by
   setting a small limit for the 'stock', there is no high CPU consumption or errors.
  
-       Para hacer que el productor produzca muy lento y consumidor consuma muy rapido, se quita el fragmento de codigo que duerme el hilo productor por un segundo luego de
+       Para hacer que el productor produzca muy rápido y consumidor consuma muy lento, se quita el fragmento de codigo que duerme el hilo productor por un segundo luego de
        producir un elemento y se coloca en el hilo consumidor luego de se consuma un elemento. Por otro lado, para garantizar que se respete el límite de productos en la
        lista, se puede poner un `queue.wait()` que ponga el hilo productor en espera mientras la longitud de esa lista sea igual a dicho límite y se realiza un 
        `queue.notifyAll()` desde el hilo consumidor cuando se consuma un elemento. Con lo anterior implementado se obtiene el siguiente consumo de CPU:
