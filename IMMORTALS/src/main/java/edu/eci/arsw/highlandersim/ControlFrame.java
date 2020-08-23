@@ -77,9 +77,7 @@ public class ControlFrame extends JFrame {
                         im.start();
                     }
                 }
-
                 btnStart.setEnabled(false);
-
             }
         });
         toolBar.add(btnStart);
@@ -97,9 +95,6 @@ public class ControlFrame extends JFrame {
                 }
 
                 statisticsLabel.setText("<html>"+immortals.toString()+"<br>Health sum:"+ sum);
-                
-                
-
             }
         });
         toolBar.add(btnPauseAndCheck);
@@ -111,7 +106,6 @@ public class ControlFrame extends JFrame {
                 /**
                  * IMPLEMENTAR
                  */
-
             }
         });
 

@@ -54,9 +54,37 @@
   2. Review the code and identify how the functionality indicated above was implemented. Given the intention of the game, an invariant should be that the sum of the life
   points of all players is always the same (of course, in an instant of time in which a time increase / reduction operation is not in process ). For this case, for N players,
   what should this value be?
+
+       * Para tener n jugadores inmortales en la clase controlFrame se tiene una lista de objetos tipo Immortal, los objetos de este tipo extienden de la clase Thread y en su
+       método `run()` implementan un `while(true)` que nunca se rompe, por lo que estos hilos se ejecutan eternamente. 
+   
+       * Para que cada jugador n conozca a los jugadores n-1 restantes en la clase Immortal se define un campo final tipo `List<Immortal>` al que se le asigna valor en el
+       costrusctor. Cuando controlFrame está creando jugadores pasa como parámetro la lista de jugadores que ha creado hasta el momento y esta se almacena en el campo final
+       mensionado anteriormente del nuevo Immortal. 
+   
+       * Para que cada jugador ataque permanentemente a algún otro inmortal, dentro del `while(true)` que se encuentra en el método `run()` de Immortal se llama al método
+       `fight(Immortal i2)` al que se pasa como parámetro otro inmortal al que se va a atacar, la manera de atacar es revisar si este jugador tiene un puntaje mayor a 0, si
+       es así se le restan M puntos de vida y se le suman M puntos de vida al atacante, si no es así unicamente se reporta que este jugador está "muerto".
+   
+       * El juego nunca podría tener un solo ganador. Lo más probable es que al final solo queden dos, luchando indefinidamente quitando y sumando puntos de vida porque ...
+   
+       * La suma de los puntos de vida de todos los jugadores sea siempre debe la misma (por supuesto, en un instante de tiempo en el que no se esté realizando una operación
+       de aumento / reducción de tiempo) dicha suma se debería poder calcular con atriburtos de la clase ControlFrame así: 
+       
+           Puntos de vida total = immortals.size() * DEFAULT_IMMORTAL_HEALTH; 
+    
+  3. Run the application and verify how the ‘pause andcheck’ option works. Is the invariant fulfilled?
   
-  3. Run the application and verify how the ‘pause and check’ option works. Is the invariant fulfilled?
-  
+       * La opción ‘pause and check’, en este momento, se implementa en ControlFrame recorriendo la lista immortals de esta clase con el fin de preguntarle a cada una
+       supuntaje e ir sumandolo a un acumulador que se mostrará en un JLabel como el total de puntos de vida que hay en el juego, junto con los puntos de vida que tiene cada
+       jugador. En este momento el invariante no se cumple, a continuación se muestran resultados obtenidos al oprimir el botón 'pause and check'
+       
+            ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/pauseandcheck1.png)  
+	
+	     ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/pauseandcheck2.png)  
+	
+	     Observamos que el total de puntos de vida no es igual en los dos casos, como deberia ser.
+
   4. A first hypothesis that the race condition for this function (pause and check) is presented is that the program consults the list whose values it will print, while
   other threads modify their values. To correct this, do whatever is necessary so that, before printing the current results, all other threads are paused. Additionally,
   implement the ‘resume’ option.
@@ -92,5 +120,3 @@
 		  	…
 	          }
 	      }
-  
-  	
