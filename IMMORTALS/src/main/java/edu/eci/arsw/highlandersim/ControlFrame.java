@@ -67,9 +67,13 @@ public class ControlFrame extends JFrame {
         contentPane.add(toolBar, BorderLayout.NORTH);
 
         final JButton btnStart = new JButton("Start");
+        JButton btnResume = new JButton("Resume");
+        JButton btnPauseAndCheck = new JButton("Pause and check");
+        JButton btnStop = new JButton("STOP");
+        btnStop.setEnabled(false);
+
         btnStart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
                 immortals = setupInmortals();
 
                 if (immortals != null) {
@@ -78,34 +82,34 @@ public class ControlFrame extends JFrame {
                     }
                 }
                 btnStart.setEnabled(false);
+                btnStop.setEnabled(true);
             }
         });
         toolBar.add(btnStart);
 
-        JButton btnPauseAndCheck = new JButton("Pause and check");
         btnPauseAndCheck.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
-                /*
-				 * COMPLETAR
-                 */
+                for (Immortal im : immortals) {
+                    im.pause();
+                }
                 int sum = 0;
                 for (Immortal im : immortals) {
                     sum += im.getHealth();
                 }
-
-                statisticsLabel.setText("<html>"+immortals.toString()+"<br>Health sum:"+ sum);
+                statisticsLabel.setText("<html>" + immortals.toString() + "<br>Health sum:" + sum);
+                btnPauseAndCheck.setEnabled(false);
+                btnResume.setEnabled(true);
             }
         });
         toolBar.add(btnPauseAndCheck);
 
-        JButton btnResume = new JButton("Resume");
-
         btnResume.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                /**
-                 * IMPLEMENTAR
-                 */
+                for (Immortal im : immortals) {
+                    im.resumee();
+                }
+                btnPauseAndCheck.setEnabled(true);
+                btnResume.setEnabled(false);
             }
         });
 
@@ -119,7 +123,6 @@ public class ControlFrame extends JFrame {
         toolBar.add(numOfImmortals);
         numOfImmortals.setColumns(10);
 
-        JButton btnStop = new JButton("STOP");
         btnStop.setForeground(Color.RED);
         toolBar.add(btnStop);
 
