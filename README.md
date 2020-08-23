@@ -90,7 +90,7 @@
   other threads modify their values. To correct this, do whatever is necessary so that, before printing the current results, all other threads are paused. Additionally,
   implement the ‘resume’ option.
   
-       * Se implemento la función pausa de tal manera que todos los hilos paran antes de que se consulten los puntos a cada uno e imprimir resultados actuales; también se 	  implementó el método resume que despierta a todos los hilos pausados. Al correr el programa vemos que el invariante sigue sin cumplirse: 
+       * Se implemento la función pausa de tal manera que todos los hilos paran antes de que se consulten los puntos a cada uno e imprimir resultados actuales; también se 	  creó la función reanudar que despierta a todos los hilos pausados. Al correr el programa vemos que el invariante sigue sin cumplirse: 
        
 	     ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/pauseandcheck3.png)  
   
