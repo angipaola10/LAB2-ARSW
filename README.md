@@ -71,7 +71,8 @@
        * La suma de los puntos de vida de todos los jugadores sea siempre debe la misma (por supuesto, en un instante de tiempo en el que no se esté realizando una operación
        de aumento / reducción de tiempo) dicha suma se debería poder calcular con atriburtos de la clase ControlFrame así: 
        
-           Puntos de vida total = immortals.size() * DEFAULT_IMMORTAL_HEALTH; 
+           Total de puntos de vida = immortals.size() * DEFAULT_IMMORTAL_HEALTH
+	   Total de puntos de vida = 3 * 100 = 300 (Es este caso)
     
   3. Run the application and verify how the ‘pause andcheck’ option works. Is the invariant fulfilled?
   
@@ -83,11 +84,15 @@
 	
 	     ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/pauseandcheck2.png)  
 	
-	     Observamos que el total de puntos de vida no es igual en los dos casos, como deberia ser.
-
+	     Observamos que el valor de puntos de vida es incorrecto. 
+	     
   4. A first hypothesis that the race condition for this function (pause and check) is presented is that the program consults the list whose values it will print, while
   other threads modify their values. To correct this, do whatever is necessary so that, before printing the current results, all other threads are paused. Additionally,
   implement the ‘resume’ option.
+  
+       * Se implemento la función pausa de tal manera que todos los hilos paran antes de que se consulten los puntos a cada uno e imprimir resultados actuales; también se 	  implementó el método resume que despierta a todos los hilos pausados. Al correr el programa vemos que el invariante sigue sin cumplirse: 
+       
+	     ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/pauseandcheck3.png)  
   
   5. Check the operation again (click the button many times). Is the invariant fulfilled or not ?.
   
