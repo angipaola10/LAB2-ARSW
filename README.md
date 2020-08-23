@@ -102,6 +102,22 @@
   6. Identify possible critical regions in regards to the fight of the immortals. Implement a blocking strategy that avoids race conditions. Remember that if you need to use
   two or more ‘locks’ simultaneously, you can use nested synchronized blocks:
   
+       * Se encontraron condiciones de carrera en la lucha de los inmortales, más específicamente en el método `fight(Immortal i2)`, estas son: 
+       	
+            * Dos jugadores pueden atacar a un mismo jugador al mismo tiempo, por lo que se pueden presentar condiciones de carrera ya que mientras se leen dichos puntos y
+	    se escribe nuevamente esta variable, otro hilo pudo haber escrito y a la final tendríamos datos obsoletos. 
+	    
+	     * Al hacer el reporte del proceso se prensenta una condición de carrera ya que todos los hilos pueden hacerlo al mismo tiempo debido a que es una variable
+	    compartida.
+	    
+          Se implementó una estrategia dentro de `fight(Immortal i2)` para solucionar las condiciones de carrera, se tenian que usar dos bloqueos simultáneamente, uno para
+          bloquear i2 y el otro para bloquear updateCallback, se usaron métodos sincronizados anidados como lo sugiere el enunciado. Al ejecutar el juego, vemos que el
+          invariante si se cumple:
+       
+	        ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/pauseandcheck5.png)  
+	     
+	        ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/pauseandcheck6.png)  
+  
   7. After implementing your strategy, start running your program, and pay attention to whether it comes to a halt. If so, use the jps and jstack programs to identify why the
   program stopped.
   
