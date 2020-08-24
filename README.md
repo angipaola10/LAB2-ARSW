@@ -66,7 +66,9 @@
        `fight(Immortal i2)` al que se pasa como parámetro otro inmortal al que se va a atacar, la manera de atacar es revisar si este jugador tiene un puntaje mayor a 0, si
        es así se le restan M puntos de vida y se le suman M puntos de vida al atacante, si no es así unicamente se reporta que este jugador está "muerto".
    
-       * El juego nunca podría tener un solo ganador. Lo más probable es que al final solo queden dos, luchando indefinidamente quitando y sumando puntos de vida porque ...
+       * *El juego nunca podría tener un solo ganador. Lo más probable es que al final solo queden dos, luchando indefinidamente quitando y sumando puntos de vida*, para
+       garantizar esto un jugador no puede matar a otro (poner su puntaje de vida igual a 0) a menos de que exista un tercer jugador vivo, cuando un alguien muere es
+       eliminado de la lista de jugadores.
    
        * La suma de los puntos de vida de todos los jugadores sea siempre debe la misma (por supuesto, en un instante de tiempo en el que no se esté realizando una operación
        de aumento / reducción de tiempo) dicha suma se debería poder calcular con atriburtos de la clase ControlFrame así: 
@@ -102,21 +104,19 @@
   6. Identify possible critical regions in regards to the fight of the immortals. Implement a blocking strategy that avoids race conditions. Remember that if you need to use
   two or more ‘locks’ simultaneously, you can use nested synchronized blocks:
   
-       * Se encontraron condiciones de carrera en la lucha de los inmortales, más específicamente en el método `fight(Immortal i2)`, estas son: 
+       * Se encontraron condiciones de carrera en la lucha de los inmortales: 
        	
             * Dos jugadores pueden atacar a un mismo jugador al mismo tiempo, por lo que se pueden presentar condiciones de carrera ya que mientras se leen dichos puntos y
-	    se escribe nuevamente esta variable, otro hilo pudo haber escrito y a la final tendríamos datos obsoletos. 
+	    se escribe nuevamente esta variable, otro hilo pudo haber escrito y a la final tendríamos datos obsoletos. Para solucionar esto bloqueamos el jugador al que vamos
+	    a atacar.
 	    
-	     * Al hacer el reporte del proceso se prensenta una condición de carrera ya que todos los hilos pueden hacerlo al mismo tiempo debido a que es una variable
-	    compartida.
-	    
-          Se implementó una estrategia dentro de `fight(Immortal i2)` para solucionar las condiciones de carrera, se tenian que usar dos bloqueos simultáneamente, uno para
-          bloquear i2 y el otro para bloquear updateCallback, se usaron métodos sincronizados anidados como lo sugiere el enunciado. Al ejecutar el juego, vemos que el
-          invariante si se cumple:
-       
-	        ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/pauseandcheck5.png)  
+	     * Se pueden presentar condiciones de carrera al usar la lista de jugadores, es importante sincronizar su uso. 
+	  
+          Podemos observar que el invariante se cumple:
+		
+	       ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/invariante1.png)  
 	     
-	        ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/pauseandcheck6.png)  
+	       ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/invariante2.png)  
   
   7. After implementing your strategy, start running your program, and pay attention to whether it comes to a halt. If so, use the jps and jstack programs to identify why the
   program stopped.
