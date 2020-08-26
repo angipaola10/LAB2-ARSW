@@ -21,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.JScrollBar;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ControlFrame extends JFrame {
 
@@ -71,16 +72,13 @@ public class ControlFrame extends JFrame {
         JButton btnPauseAndCheck = new JButton("Pause and check");
         JButton btnStop = new JButton("STOP");
         btnStop.setEnabled(false);
+        btnPauseAndCheck.setEnabled(false);
+        btnResume.setEnabled(false);
 
         btnStart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                immortals = setupInmortals();
-
-                if (immortals != null) {
-                    for (Immortal im : immortals) {
-                        im.start();
-                    }
-                }
+                start();
+                btnPauseAndCheck.setEnabled(true);
                 btnStart.setEnabled(false);
                 btnStop.setEnabled(true);
             }
@@ -89,9 +87,7 @@ public class ControlFrame extends JFrame {
 
         btnPauseAndCheck.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                for (Immortal im : immortals) {
-                    im.pause();
-                }
+                pause();
                 int sum = 0;
                 for (Immortal im : immortals) {
                     sum += im.getHealth();
@@ -105,15 +101,23 @@ public class ControlFrame extends JFrame {
 
         btnResume.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                for (Immortal im : immortals) {
-                    im.resumee();
-                }
+                resumee();
                 btnPauseAndCheck.setEnabled(true);
                 btnResume.setEnabled(false);
             }
         });
-
         toolBar.add(btnResume);
+
+        btnStop.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                stopp();
+                btnPauseAndCheck.setEnabled(false);
+                btnResume.setEnabled(false);
+                btnStop.setEnabled(false);
+                btnStart.setEnabled(true);
+            }
+        });
 
         JLabel lblNumOfImmortals = new JLabel("num. of immortals:");
         toolBar.add(lblNumOfImmortals);
@@ -139,6 +143,50 @@ public class ControlFrame extends JFrame {
 
     }
 
+    public void start(){
+        immortals = setupInmortals();
+        if (immortals != null) {
+            for (Immortal im : immortals) {
+                im.start();
+            }
+        }
+    }
+
+    public void pause(){
+        for (Immortal im : immortals) {
+            im.pause();
+        }
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException interruptedException) {
+            interruptedException.printStackTrace();
+        }
+    }
+
+    public void resumee(){
+        for (Immortal im : immortals) {
+            im.resumee();
+        }
+    }
+
+    public void stopp(){
+        for (Immortal im: immortals){
+            im.stopp();
+        }
+    }
+
+    public List<Immortal> getImmortals() {
+        return immortals;
+    }
+
+    public int getNumOfImmortals() {
+        return Integer.parseInt(numOfImmortals.getText());
+    }
+
+    public int getDefaultImmortalHealth() {
+        return DEFAULT_IMMORTAL_HEALTH;
+    }
+
     public List<Immortal> setupInmortals() {
 
         ImmortalUpdateReportCallback ucb=new TextAreaUpdateReportCallback(output,scrollPane);
@@ -146,7 +194,7 @@ public class ControlFrame extends JFrame {
         try {
             int ni = Integer.parseInt(numOfImmortals.getText());
 
-            List<Immortal> il = new LinkedList<Immortal>();
+            List<Immortal> il = new CopyOnWriteArrayList<Immortal>();
 
             for (int i = 0; i < ni; i++) {
                 Immortal i1 = new Immortal("im" + i, il, DEFAULT_IMMORTAL_HEALTH, DEFAULT_DAMAGE_VALUE,ucb);
@@ -186,5 +234,5 @@ class TextAreaUpdateReportCallback implements ImmortalUpdateReportCallback{
         );
 
     }
-    
+
 }
