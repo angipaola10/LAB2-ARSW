@@ -1,6 +1,24 @@
 # 🛠️ LABORATORIO 2 
   
   📌 **Angi Paola Jiménez Pira**
+  
+## Compile and Run Instructions
+
+   Es necesario tener instalado ![maven](https://maven.apache.org/download.cgi)  en el equipo que se desee correr el programa. Abra la consola y ubiquese donde desea tener 
+   este proyecto, inserte el comando `git clone https://github.com/angipaola10/LAB2-ARSW` para clonar el proyecto en su computador, se creará la carpera **/LAB2-ARSW**
+
+   * **Compilar**
+     
+       Estando en la consola, ingrese a la carpeta **/LAB2-ARSW/IMMORTALS** que contiene este proyecto y ejecute el comando `mvn package` para compilar el programa.
+
+   * **Ejecutar**
+      
+       Luego de compilar el programa, en la misma ubicación inserte el comando de ejecución:
+	
+	 * Parte 1:  mvn exec:java -Dexec.mainClass=edu.eci.arst.concprg.prodcons.StartProduction
+	
+	 * Parte 2: mvn exec:java -Dexec.mainClass=edu.eci.arsw.highlandersim.ControlFrame
+	 
 
 ## ⏱️ Part I - Before finishing class
 	
@@ -54,9 +72,6 @@
   2. Review the code and identify how the functionality indicated above was implemented. Given the intention of the game, an invariant should be that the sum of the life
   points of all players is always the same (of course, in an instant of time in which a time increase / reduction operation is not in process ). For this case, for N players,
   what should this value be?
-
-       * Para tener n jugadores inmortales en la clase controlFrame se tiene una lista de objetos tipo Immortal, los objetos de este tipo extienden de la clase Thread y en su
-       método `run()` implementan un `while(true)` que nunca se rompe, por lo que estos hilos se ejecutan eternamente. 
    
        * Para que cada jugador n conozca a los jugadores n-1 restantes en la clase Immortal se define un campo final tipo `List<Immortal>` al que se le asigna valor en el
        costrusctor. Cuando controlFrame está creando jugadores pasa como parámetro la lista de jugadores que ha creado hasta el momento y esta se almacena en el campo final
@@ -110,7 +125,7 @@
 	    se escribe nuevamente esta variable, otro hilo pudo haber escrito y a la final tendríamos datos obsoletos. Para solucionar esto bloqueamos el jugador al que vamos
 	    a atacar.
 	    
-	     * Se pueden presentar condiciones de carrera al usar la lista de jugadores, es importante sincronizar su uso. 
+	     * Se pueden presentar condiciones de carrera al usar la lista de jugadores, para solucionar esto se crea la lista como `List<Immortal> immortals = new CopyOnWriteArrayList<Immortal>();`
 	  
           Podemos observar que el invariante se cumple:
 		
@@ -123,8 +138,22 @@
   
   8. Consider a strategy to correct the problem identified above (you can review Chapter 15 of Java Concurrency in Practice again).
   
+  * ***NO SE REALIZÓ EL PUNTO 8 YA QUE EN EL PUNTO 7 NO SE OBSERVÓ QUE EL PROGRAMA SE DETUVIERA.***
+  
   9. Once the problem is corrected, rectify that the program continues to function consistently when 100, 1000 or 10000 immortals are executed. If in these large cases the
   invariant begins to be breached again, you must analyze what was done in step 4.
+  
+	    * 10 hilos:
+	    
+	  	  ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/hilos10.png) 
+	     
+	    * 100 hilos:
+	    
+	  	  ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/hilos100.png) 
+	     
+	    * 1000 hilos:
+	    
+	  	  ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/hilos1000.png) 
   
   10. An annoying element for the simulation is that at a certain point in it there are few living 'immortals' making failed fights with 'immortals' already dead. It is
   necessary to suppress the immortal dead of the simulation as they die.
@@ -133,14 +162,13 @@
       there are many 'immortals' in it. Write your conclusions about it in the file ANSWERS.txt.
      
       2. Correct the previous problem WITHOUT using synchronization, since making access to the shared list of immortals sequential would make simulation extremely slow. 
+      
+      * En el punto 2 se implementó que los jugadores muertos fueran eliminados de la lista para evitar ataques fallidos y  garantizar que hayan minimo dos jugadores vivos,
+      esto creaba condición de carrera y se pudo observar al ejecutar muchos hilos ya que  lanzaba ConcurrentModificationException, esto se presentaba debido a que en algún
+      momento, mientras se estaba recorriendo la lista de jugadores alguno murió y se intentó remover de la lista. Para solucionar esto habian dos opciones, la primera
+      garantizar que siempre que se fuera a recorrer o modificar la lista, esta se bloqueara usando un método sincronización, pero esto no era muy eficiente; la segunda
+      opción era hacer esta lista un tipo de coleccion concurrente, esta fue la opción que se implementó, como se mensionó en el punto 6, se definió la lista como `List<Immortal> immortals = new CopyOnWriteArrayList<Immortal>();`
   
   11. To finish, implement the STOP option.
   
-  
-      Step 6
-     	
-	      synchronized(locka){
-	          synchronized(lockb){
-		  	…
-	          }
-	      }
+      * La opción STOP se implementó, esta finaliza el juego deteniendo todos los hilos, si se presiona el boton Start iniciará un nuevo juego. 
