@@ -4,20 +4,26 @@
   
 ## Compile and Run Instructions
 
-   Es necesario tener instalado ![maven](https://maven.apache.org/download.cgi)  en el equipo que se desee correr el programa. Abra la consola y ubiquese donde desea tener 
-   este proyecto, inserte el comando `git clone https://github.com/angipaola10/LAB2-ARSW` para clonar el proyecto en su computador, se creará la carpera **/LAB2-ARSW**
+   Es necesario tener instalado [maven](https://maven.apache.org/ "maven") en el equipo que se desee correr el programa. Abra la consola y ubiquese donde desea tener este
+   proyecto, inserte el comando `git clone https://github.com/angipaola10/LAB2-ARSW` para clonar el proyecto en su computador, se creará la carpera **/LAB2-ARSW**
 
    * **Compilar**
      
        Estando en la consola, ingrese a la carpeta **/LAB2-ARSW/IMMORTALS** que contiene este proyecto y ejecute el comando `mvn package` para compilar el programa.
+       
+       ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/compilar.png) 
 
    * **Ejecutar**
       
        Luego de compilar el programa, en la misma ubicación inserte el comando de ejecución:
 	
 	 * Parte 1:  mvn exec:java -Dexec.mainClass=edu.eci.arst.concprg.prodcons.StartProduction
+	 
+	     ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/ejecutar1.png) 
 	
 	 * Parte 2: mvn exec:java -Dexec.mainClass=edu.eci.arsw.highlandersim.ControlFrame
+	 
+	     ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/ejecutar2.png) 
 	 
 
 ## ⏱️ Part I - Before finishing class
