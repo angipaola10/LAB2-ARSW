@@ -17,11 +17,11 @@
       
        Luego de compilar el programa, en la misma ubicación inserte el comando de ejecución:
 	
-	 * Parte 1:  mvn exec:java -Dexec.mainClass=edu.eci.arst.concprg.prodcons.StartProduction
+	 * Parte 1:  `mvn exec:java -Dexec.mainClass=edu.eci.arst.concprg.prodcons.StartProduction`
 	 
 	     ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/ejecutar1.png) 
 	
-	 * Parte 2: mvn exec:java -Dexec.mainClass=edu.eci.arsw.highlandersim.ControlFrame
+	 * Parte 2: `mvn exec:java -Dexec.mainClass=edu.eci.arsw.highlandersim.ControlFrame`
 	 
 	     ![alt text](https://raw.githubusercontent.com/angipaola10/LAB2-ARSW/master/IMMORTALS/img/ejecutar2.png) 
 	 
